@@ -22,7 +22,10 @@ endif()
 # SEAL Configuration #
 ######################
 
-find_package(SEAL 4.0 CONFIG) # sets SEAL_FOUND variable
+set(SEAL_DIR E:/myFolder/uni/masters/2nd_semestru/mpc/project/SEAL/build/cmake)
+
+find_package(SEAL 4.0 REQUIRED) # sets SEAL_FOUND variable
+set(MLIR_DIR E:/myFolder/uni/masters/2nd_semestru/mpc/project/llvm-new/llvm-project/build/lib/cmake/mlir)
 
 ###########################
 # MLIR/LLVM Configuration #
@@ -30,9 +33,11 @@ find_package(SEAL 4.0 CONFIG) # sets SEAL_FOUND variable
 if(HECO_STANDALONE_BUILD)
 
         set(CMAKE_BUILD_WITH_INSTALL_NAME_DIR ON)
+		
+		
 
         # Locate MLIR, which recursively locates LLVM
-        find_package(MLIR REQUIRED CONFIG)
+        find_package(MLIR CONFIG REQUIRED)
         message(STATUS "Using MLIRConfig.cmake in: ${MLIR_DIR}")
         message(STATUS "Using LLVMConfig.cmake in: ${LLVM_DIR}")
 

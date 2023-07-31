@@ -109,8 +109,8 @@ def BatchedSecret : TypeDef<FHE_Dialect, "BatchedSecret">  {
 // in that the final C++ classes generated for the operations will not inherit from this
 // nor will there be a C++ class fhe::Op
 class FHE_Op<string mnemonic, list<Trait> traits = []> :
-        // We specify the dialect, and add the "NoSideEffect" trait to all operations
-        Op<FHE_Dialect, mnemonic, !listconcat(traits, [NoSideEffect])> {
+        // We specify the dialect, and add the "NoMemoryEffect" trait to all operations
+        Op<FHE_Dialect, mnemonic, !listconcat(traits, [NoMemoryEffect])> {
 
   // The assembly format for most operations is similar enough to allow us
   // to define a generic version here, which only a few operations override.
@@ -270,7 +270,7 @@ def FHE_InsertOp : FHE_Op<"insert", [
 }
 
 // Because we don't want the default assembly pattern from FHE:OP, we have to inherit directly from OP for this one!
-def FHE_CombineOp : Op<FHE_Dialect, "combine", [NoSideEffect]> {
+def FHE_CombineOp : Op<FHE_Dialect, "combine", [NoMemoryEffect]> {
 
   let summary = "combines elements from multiple vectors into one (executing under FHE requires ptxt-mult with mask and additions)";
 

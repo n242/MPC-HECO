@@ -74,9 +74,9 @@ def ASTIntegerType : Test_Type<"TestInteger"> {
 //===----------------------------------------------------------------------===//
 
 /// NodeOps are used to directly map an AST into MLIR using nested regions.
-/// as a consequence, they always have the NoTerminator and NoSideEffect trait
+/// as a consequence, they always have the NoTerminator and NoMemoryEffect trait
 class AST_NodeOp<string mnemonic, list<Trait> traits = []> :
-        Op<AST_Dialect, mnemonic, !listconcat(traits, [NoTerminator, NoSideEffect])> {
+        Op<AST_Dialect, mnemonic, !listconcat(traits, [NoTerminator, NoMemoryEffect])> {
   let assemblyFormat = [{
   regions attr-dict-with-keyword
   }];
@@ -238,7 +238,7 @@ def AST_OperatorExpressionOp : AST_ExpressionOp<"operator_expression", []> {
     AnyAttr: $op
   );
   let regions = (region
-    VariadicRegion<AnyExpression>: $operands
+    VariadicRegion<AnyExpression>: $operand
   );
 }
 
@@ -251,6 +251,7 @@ def AST_UnaryExpressionOp : AST_ExpressionOp<"unary_expression", []> {
   let regions = (region
     AnyExpression: $operand
   );
+
 }
 
 def AST_CallOp : AST_ExpressionOp<"call", []> {
